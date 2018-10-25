@@ -39,6 +39,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     @IBAction func initApp() {
+        
         view.backgroundColor = UIColor.darkGray
         
         imageView.contentMode = .scaleAspectFit
