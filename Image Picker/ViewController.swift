@@ -78,18 +78,19 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     // MARK: ImagePickerController logic
     
-    @IBAction func openImagePicker() {
+    func openImagePickerWith(source: UIImagePickerController.SourceType) {
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
-        imagePickerController.sourceType = .photoLibrary
+        imagePickerController.sourceType = source
         present(imagePickerController, animated: true, completion: nil)
     }
     
     @IBAction func openCamera() {
-        let imagePickerController = UIImagePickerController()
-        imagePickerController.delegate = self
-        imagePickerController.sourceType = .camera
-        present(imagePickerController, animated: true, completion: nil)
+        openImagePickerWith(source: .camera)
+    }
+    
+    @IBAction func openPhotoLibrary() {
+        openImagePickerWith(source: .photoLibrary)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -144,25 +145,20 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     // MARK: Meme generation and saving logic
     
     func generateMeme() -> UIImage {
-        hideUI()
+        shouldHideUI(true)
         
         UIGraphicsBeginImageContext(view.frame.size)
         view.drawHierarchy(in: view.frame, afterScreenUpdates: true)
         let memedImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         
-        showUI()
+        shouldHideUI(false)
         return memedImage
     }
     
-    func hideUI() {
-        toolBar.isHidden = true
-        navBar.isHidden = true
-    }
-    
-    func showUI() {
-        toolBar.isHidden = false
-        navBar.isHidden = false
+    func shouldHideUI(_ shouldHide: Bool) {
+        toolBar.isHidden = shouldHide
+        navBar.isHidden = shouldHide
     }
     
     @IBAction func share() {

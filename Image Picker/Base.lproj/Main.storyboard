@@ -37,7 +37,7 @@
                                 <items>
                                     <barButtonItem title="Image Picker" id="1gu-iH-oYD">
                                         <connections>
-                                            <action selector="openImagePicker" destination="BYZ-38-t0r" id="bhy-Wp-KOB"/>
+                                            <action selector="openPhotoLibrary" destination="BYZ-38-t0r" id="nkR-5b-yjp"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem title="Camera" id="D00-hV-cHe">
