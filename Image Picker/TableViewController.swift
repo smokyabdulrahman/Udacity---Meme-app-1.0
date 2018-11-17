@@ -35,9 +35,12 @@ class TableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let nextVC = storyboard?.instantiateViewController(withIdentifier: "MemeViewController") as! ViewController
-        nextVC.meme = memes[indexPath.row]
-        self.present(nextVC, animated: true, completion: nil)
+        let nextVC = storyboard?.instantiateViewController(withIdentifier: "MemeDetailsViewController") as! MemeDetailsViewController
+        
+        nextVC.memeImg = memes[indexPath.row].memeImg
+        nextVC.hidesBottomBarWhenPushed = true
+
+        navigationController?.pushViewController(nextVC, animated: true)
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

@@ -44,11 +44,12 @@ class CollectionViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let memeVC = storyboard?.instantiateViewController(withIdentifier: "MemeViewController") as! ViewController
+        let memeVC = storyboard?.instantiateViewController(withIdentifier: "MemeDetailsViewController") as! MemeDetailsViewController
         
-        memeVC.meme = memes[indexPath.row]
+        memeVC.memeImg = memes[indexPath.row].memeImg
+        memeVC.hidesBottomBarWhenPushed = true
 
-        present(memeVC, animated: true, completion: nil)
+        navigationController?.pushViewController(memeVC, animated: true)
     }
     
     func initFlowLayout() {

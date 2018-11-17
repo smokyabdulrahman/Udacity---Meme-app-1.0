@@ -10,8 +10,6 @@ import UIKit
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    var meme: Meme?
-    
     @IBOutlet weak var topTextField: UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
     var isMemeReadyToBeShared: Bool = false
@@ -41,8 +39,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         unsubscribeToKeyboardNotifications()
     }
     
-    func initApp(withCheckingMeme: Bool = true) {
-        
+    func initApp() {
         view.backgroundColor = UIColor.darkGray
         
         imageView.contentMode = .scaleAspectFit
@@ -52,20 +49,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         currentImg = nil
         
         initTextFields()
-        if withCheckingMeme {
-            initMeme()
-        }
-    }
-    
-    func initMeme() {
-        guard let meme = self.meme else {
-            return
-        }
-        
-        //we are sure a meme was passed!
-        topTextField.text = meme.topText
-        bottomTextField.text = meme.bottomText
-        imageView.image = meme.originalImg
     }
     
     func initTextFields() {
@@ -87,10 +70,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         topTextField.textAlignment = .center
         bottomTextField.textAlignment = .center
-    }
-    
-    @IBAction func resetApp() {
-        initApp(withCheckingMeme: false)
     }
     
     override var prefersStatusBarHidden: Bool {
@@ -194,10 +173,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     func saveMeme() {
-        meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, originalImg: currentImg, memeImg: generateMeme())
+        let meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, originalImg: currentImg, memeImg: generateMeme())
         
         // save meme in shared instance
-        (UIApplication.shared.delegate as! AppDelegate).memes.append(meme!)
+        (UIApplication.shared.delegate as! AppDelegate).memes.append(meme)
     }
     
     @IBAction func dismissVC() {
