@@ -10,6 +10,8 @@ import UIKit
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+    var meme: Meme?
+    
     @IBOutlet weak var topTextField: UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
     var isMemeReadyToBeShared: Bool = false
@@ -19,6 +21,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var cameraButton: UIBarButtonItem!
     @IBOutlet weak var shareButton: UIBarButtonItem!
+    
     var currentImg: UIImage!
     
     let textFieldCPDelegat = TextFieldClearPlaceHolderDelegate()
@@ -49,6 +52,18 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         currentImg = nil
         
         initTextFields()
+        initMeme()
+    }
+    
+    func initMeme() {
+        guard let meme = self.meme else {
+            return
+        }
+        
+        //we are sure a meme was passed!
+        topTextField.text = meme.topText
+        bottomTextField.text = meme.bottomText
+        imageView.image = meme.originalImg
     }
     
     func initTextFields() {
@@ -164,20 +179,36 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBAction func share() {
         let activityViewController = UIActivityViewController(activityItems: [generateMeme()], applicationActivities: nil)
         activityViewController.completionWithItemsHandler = {(activityType: UIActivity.ActivityType?, completed: Bool, returnedItems: [Any]?, error: Error?) in
-            if !completed {
-                // User canceled
-                return
+            if completed {
+                // User completed activity
+                self.saveMeme()
             }
-            // User completed activity
-            self.saveMeme()
         }
-        present(activityViewController, animated: true, completion: saveMeme)
+        present(activityViewController, animated: true, completion: nil)
     }
     
     func saveMeme() {
-        let meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, originalImg: currentImg, memeImg: generateMeme())
-        print("saveMeme called")
+        meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, originalImg: currentImg, memeImg: generateMeme())
+        
+        // save meme in shared instance
+        (UIApplication.shared.delegate as! AppDelegate).memes.append(meme!)
     }
     
+    @IBAction func dismissVC() {
+        dismiss(animated: true, completion: nil)
+    }
+    
+}
+
+extension UIViewController {
+    func addMemeCreatorPresenterButton() {
+        let rightBarItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(openMemeVC))
+        navigationItem.rightBarButtonItem = rightBarItem
+    }
+    
+    @objc func openMemeVC() {
+        let memeVC = storyboard?.instantiateViewController(withIdentifier: "MemeViewController") as! ViewController
+        present(memeVC, animated: true, completion: nil)
+    }
 }
 
