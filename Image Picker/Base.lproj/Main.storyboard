@@ -181,7 +181,7 @@
                                         </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" title="Cancel" id="Lkl-rg-hcG">
                                             <connections>
-                                                <action selector="initApp" destination="BYZ-38-t0r" id="pkN-9y-f5K"/>
+                                                <action selector="resetApp" destination="BYZ-38-t0r" id="ji5-J8-OxJ"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -221,7 +221,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="831" y="-683"/>
+            <point key="canvasLocation" x="934" y="-683"/>
         </scene>
         <!--Table View-->
         <scene sceneID="Ahp-wJ-GhX">

@@ -37,7 +37,7 @@ class TableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let nextVC = storyboard?.instantiateViewController(withIdentifier: "MemeViewController") as! ViewController
         nextVC.meme = memes[indexPath.row]
-        present(nextVC, animated: true, completion: nil)
+        self.present(nextVC, animated: true, completion: nil)
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

@@ -41,7 +41,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         unsubscribeToKeyboardNotifications()
     }
     
-    @IBAction func initApp() {
+    func initApp(withCheckingMeme: Bool = true) {
         
         view.backgroundColor = UIColor.darkGray
         
@@ -52,7 +52,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         currentImg = nil
         
         initTextFields()
-        initMeme()
+        if withCheckingMeme {
+            initMeme()
+        }
     }
     
     func initMeme() {
@@ -85,6 +87,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         topTextField.textAlignment = .center
         bottomTextField.textAlignment = .center
+    }
+    
+    @IBAction func resetApp() {
+        initApp(withCheckingMeme: false)
     }
     
     override var prefersStatusBarHidden: Bool {
